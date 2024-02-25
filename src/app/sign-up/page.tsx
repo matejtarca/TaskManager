@@ -1,5 +1,6 @@
 import React from "react";
+import SignUp from "@/scenes/SignUp/SignUp";
 
 export default function Page() {
-  return <h1>Sign up</h1>;
+  return <SignUp />;
 }

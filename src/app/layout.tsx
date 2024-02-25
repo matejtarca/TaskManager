@@ -18,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <NextAuthProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <div className="min-h-screen flex flex-col justify-center items-center">
+            <div className="w-[40vw]">{children}</div>
+          </div>
+        </body>
       </NextAuthProvider>
     </html>
   );
