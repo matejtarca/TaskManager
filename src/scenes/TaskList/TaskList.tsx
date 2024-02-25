@@ -1,17 +1,18 @@
-"use client";
-
 import React from "react";
-import { signOut, useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+import getTasks from "@/server/getters/getTasks";
+import Link from "next/link";
 
-const TaskList = () => {
-  const { data, status } = useSession();
+const TaskList = async () => {
+  const tasks = await getTasks();
   return (
     <>
-      {data?.username || "unknown user"}
-      <Button onClick={() => signOut({ callbackUrl: "/sign-in" })}>
-        Sign out
-      </Button>
+      <h1>Tasks</h1>
+      <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>{task.title}</li>
+        ))}
+      </ul>
+      <Link href={"/create-task"}>Create new task</Link>
     </>
   );
 };
