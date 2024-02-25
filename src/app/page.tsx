@@ -1,3 +1,5 @@
-export default function Home() {
-  return <h1>Hello world</h1>;
+import React from "react";
+
+export default async function Home() {
+  return <h1>Task list</h1>;
 }
