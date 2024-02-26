@@ -21,6 +21,7 @@ import createTask from "@/server/actions/createTask";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
+import editTask from "@/server/actions/editTask";
 
 const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(50),
@@ -28,20 +29,37 @@ const newTaskSchema = z.object({
 });
 
 type NewTaskSchema = z.infer<typeof newTaskSchema>;
-const NewTaskForm = () => {
+type NewTaskFormProps =
+  | {
+      mode: "create";
+    }
+  | {
+      mode: "edit";
+      initialData: NewTaskSchema;
+      taskId: string;
+    };
+const NewTaskForm = (props: NewTaskFormProps) => {
   const form = useForm<NewTaskSchema>({
     resolver: zodResolver(newTaskSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: props.mode === "edit" ? props.initialData.title : "",
+      description: props.mode === "edit" ? props.initialData.description : "",
     },
   });
   const [pending, startTransition] = useTransition();
   const [error, setError] = React.useState<string | null>(null);
   const { push } = useRouter();
-  const onSubmit = async (data: NewTaskSchema) => {
+  const onSubmit = async (formData: NewTaskSchema) => {
     startTransition(async () => {
-      const result = await callServerAction(createTask, data);
+      let result;
+      if (props.mode === "edit") {
+        result = await callServerAction(editTask, {
+          ...formData,
+          taskId: props.taskId,
+        });
+      } else {
+        result = await callServerAction(createTask, formData);
+      }
       if (!result.success) {
         setError(result.message);
       }

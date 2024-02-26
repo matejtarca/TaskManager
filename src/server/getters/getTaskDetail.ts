@@ -1,30 +1,30 @@
 import requireUser from "@/server/helpers/requireUser";
 import { prisma } from "@/server/prismaClient";
-import { TaskStatus } from "@prisma/client";
 
-export type Task = {
-  id: string;
+export type TaskForForm = {
   title: string;
   description: string;
-  status: TaskStatus;
 };
 
-const getTasks = async (): Promise<Task[]> => {
+const getTaskDetail = async (taskId: string): Promise<TaskForForm | null> => {
   const user = await requireUser();
-  return prisma.task.findMany({
+
+  const task = await prisma.task.findUnique({
     where: {
+      id: taskId,
       authorId: user.id,
     },
     select: {
-      id: true,
       title: true,
       description: true,
-      status: true,
-    },
-    orderBy: {
-      status: "asc",
     },
   });
+
+  if (!task) {
+    return null;
+  }
+
+  return task;
 };
 
-export default getTasks;
+export default getTaskDetail;

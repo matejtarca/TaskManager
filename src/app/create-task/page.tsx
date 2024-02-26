@@ -14,5 +14,5 @@ export default async function Page() {
   if (!session) {
     redirect("/sign-in");
   }
-  return <NewTaskForm />;
+  return <NewTaskForm mode="create" />;
 }
