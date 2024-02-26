@@ -3,6 +3,11 @@ import TaskList from "@/scenes/TaskList/TaskList";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TaskManager | Task List",
+};
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
