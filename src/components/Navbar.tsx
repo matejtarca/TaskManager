@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
   return (
-    <div className="flex items-center p-5 fixed w-screen">
+    <div className="flex items-center p-5 fixed w-screen bg-white">
       <div className="flex-1"></div>
       <div className="flex-1 max-w-xs mx-auto text-center">
         <Link href="/">
@@ -21,7 +21,9 @@ const Navbar = async () => {
       <div className="flex-1 flex justify-end">
         {session ? (
           <div className="flex items-center gap-4">
-            <span>Signed in as {session.username}</span>
+            <span>
+              Signed in as <strong>{session.username}</strong>
+            </span>
             <SignOutButton />
           </div>
         ) : (

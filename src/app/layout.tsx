@@ -23,8 +23,10 @@ export default function RootLayout({
       <NextAuthProvider>
         <body className={inter.className}>
           <Navbar />
-          <div className="min-h-screen flex flex-col justify-center items-center">
-            <div className="w-[40vw]">{children}</div>
+          <div className="min-h-screen flex flex-col justify-center items-center pt-[120px] md:pt-0">
+            <div className="w-[95vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
+              {children}
+            </div>
           </div>
           <Toaster />
         </body>
