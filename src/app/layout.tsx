@@ -4,6 +4,7 @@ import "./globals.css";
 import NextAuthProvider from "@/components/NextAuthProvider";
 import Navbar from "@/components/Navbar";
 import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <div className="min-h-screen flex flex-col justify-center items-center">
             <div className="w-[40vw]">{children}</div>
           </div>
+          <Toaster />
         </body>
       </NextAuthProvider>
     </html>

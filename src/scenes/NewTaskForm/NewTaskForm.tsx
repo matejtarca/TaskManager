@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import editTask from "@/server/actions/editTask";
+import Link from "next/link";
 
 const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(50),
@@ -104,10 +105,15 @@ const NewTaskForm = (props: NewTaskFormProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={pending}>
-            {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Save
-          </Button>
+          <div className="flex flex-row gap-4">
+            <Button type="submit" disabled={pending}>
+              {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Save
+            </Button>
+            <Button asChild variant="secondary">
+              <Link href={"/"}>Back</Link>
+            </Button>
+          </div>
         </form>
       </Form>
     </>

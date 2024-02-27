@@ -12,20 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { flexRender, useReactTable } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { Check, MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import completeTask from "@/server/actions/completeTask";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+import ActionsCell from "@/scenes/TaskList/components/ActionsCell";
 
 type TaskTableProps = {
   tasks: Task[];
@@ -54,43 +42,7 @@ const columns: ColumnDef<Task>[] = [
   {
     header: "",
     id: "actions",
-    cell: (cell) => {
-      const taskId = cell.row.original.id;
-      return (
-        <div className="flex flex-row justify-end">
-          {cell.row.original.status === "TODO" && (
-            <Button
-              size="sm"
-              variant="success"
-              onClick={async () =>
-                await completeTask({
-                  taskId,
-                })
-              }
-            >
-              <Check className="w-4 h-4 mr-2" />
-              Complete
-            </Button>
-          )}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href={`/edit-task/${taskId}`}>Edit</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
+    cell: (cell) => <ActionsCell task={cell.row.original} />,
   },
 ];
 const TaskTable = ({ tasks }: TaskTableProps) => {
