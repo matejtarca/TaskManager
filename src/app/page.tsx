@@ -1,6 +1,6 @@
 import React from "react";
 import TaskList from "@/scenes/TaskList/TaskList";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/server/auth/authOptions";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
