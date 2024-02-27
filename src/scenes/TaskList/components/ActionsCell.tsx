@@ -20,6 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
+import callServerAction from "@/server/helpers/callServerAction";
 
 type ActionsCellProps = {
   task: Task;
@@ -28,15 +29,34 @@ const ActionsCell = ({ task }: ActionsCellProps) => {
   const [, startTransition] = useTransition();
   const onDeleteClick = () => {
     startTransition(async () => {
-      await deleteTask({ taskId: task.id });
+      const res = await callServerAction(deleteTask, { taskId: task.id });
+      if (!res.success) {
+        toast({
+          title: "Failed to delete task",
+          description: res.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Task deleted",
+        });
+      }
     });
   };
   const onCompleteClick = () => {
     startTransition(async () => {
-      await completeTask({ taskId: task.id });
-      toast({
-        title: "Task completed",
-      });
+      const res = await callServerAction(completeTask, { taskId: task.id });
+      if (!res.success) {
+        toast({
+          title: "Failed to complete task",
+          description: res.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Task completed",
+        });
+      }
     });
   };
   const { toast } = useToast();

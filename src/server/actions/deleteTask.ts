@@ -11,7 +11,7 @@ const deleteTaskSchema = z.object({
 
 type DeleteTaskInput = z.infer<typeof deleteTaskSchema>;
 
-const editTask = async (dataInput: DeleteTaskInput) => {
+const deleteTask = async (dataInput: DeleteTaskInput) => {
   const user = await requireUser();
   const data = deleteTaskSchema.parse(dataInput);
 
@@ -35,4 +35,4 @@ const editTask = async (dataInput: DeleteTaskInput) => {
   revalidatePath("/", "page");
 };
 
-export default editTask;
+export default deleteTask;

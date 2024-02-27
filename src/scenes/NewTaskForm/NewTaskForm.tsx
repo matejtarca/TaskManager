@@ -85,7 +85,7 @@ const NewTaskForm = (props: NewTaskFormProps) => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="title" {...field} />
+                  <Input placeholder="Wash the dishes" {...field} />
                 </FormControl>
                 <FormDescription>What should you do?</FormDescription>
                 <FormMessage />
