@@ -12,7 +12,7 @@ const TaskList = async () => {
     <div className="flex flex-col gap-4">
       <Heading>Tasks</Heading>
       <TaskTable tasks={tasks} />
-      <Link href={"/create-task"}>
+      <Link href={"/create-task"} className="w-fit">
         <Button className="w-fit">
           <PlusCircleIcon className="w-4 h-4 mr-2" />
           Create new task
