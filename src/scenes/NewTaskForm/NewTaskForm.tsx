@@ -83,10 +83,11 @@ const NewTaskForm = (props: NewTaskFormProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input placeholder="title" {...field} />
                 </FormControl>
+                <FormDescription>What should you do?</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -98,7 +99,7 @@ const NewTaskForm = (props: NewTaskFormProps) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea rows={10} {...field} />
+                  <Textarea rows={5} {...field} />
                 </FormControl>
                 <FormDescription>Brief description</FormDescription>
                 <FormMessage />
