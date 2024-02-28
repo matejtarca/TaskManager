@@ -3,12 +3,7 @@
 import React from "react";
 import { Task } from "@/server/getters/getTasks";
 import { ColumnDef, getCoreRowModel } from "@tanstack/table-core";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   flexRender,
   useReactTable,
