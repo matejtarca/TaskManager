@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TaskStatus } from "@prisma/client";
+import { Timer } from "lucide-react";
 
 const StatusDisplayMap: Record<string, string> = {
   [TaskStatus.TODO]: "To do",
@@ -36,6 +37,29 @@ const StatusDisplayMap: Record<string, string> = {
 
 type TaskTableProps = {
   tasks: Task[];
+};
+
+const formatDateRelativeToNow = (date: Date) => {
+  const todayMidnight = new Date();
+  todayMidnight.setHours(0, 0, 0, 0);
+  const dateMidnight = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  return {
+    formatted: new Intl.RelativeTimeFormat("en", {
+      style: "short",
+      numeric: "auto",
+    }).format(
+      Math.floor(
+        (dateMidnight.getTime() - todayMidnight.getTime()) /
+          (1000 * 60 * 60 * 24),
+      ),
+      "day",
+    ),
+    isOverdue: dateMidnight < todayMidnight,
+  };
 };
 
 const columns: ColumnDef<Task>[] = [
@@ -54,6 +78,26 @@ const columns: ColumnDef<Task>[] = [
         case "COMPLETED":
           return <Badge variant="success">Completed</Badge>;
       }
+    },
+  },
+  {
+    header: "Deadline",
+    id: "deadline",
+    accessorKey: "deadline",
+    cell: (cell) => {
+      const task = cell.row.original;
+      if (task.deadline && task.status === "TODO") {
+        const { formatted, isOverdue } = formatDateRelativeToNow(task.deadline);
+        return (
+          <div
+            className={`flex items-center ${isOverdue ? "text-red-500" : ""}`}
+          >
+            <Timer className="w-5 h-5 mr-1" />
+            {formatted}
+          </div>
+        );
+      }
+      return null;
     },
   },
   {

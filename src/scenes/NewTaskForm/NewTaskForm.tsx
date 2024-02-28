@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,13 +20,21 @@ import callServerAction from "@/server/helpers/callServerAction";
 import createTask from "@/server/actions/createTask";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, CalendarIcon, Loader2 } from "lucide-react";
 import editTask from "@/server/actions/editTask";
 import Link from "next/link";
-import {Heading} from "@/components/ui/heading";
+import { Heading } from "@/components/ui/heading";
+import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 
 const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(50),
+  deadline: z.date().optional(),
   description: z.string().max(1000),
 });
 
@@ -46,10 +54,12 @@ const NewTaskForm = (props: NewTaskFormProps) => {
     defaultValues: {
       title: props.mode === "edit" ? props.initialData.title : "",
       description: props.mode === "edit" ? props.initialData.description : "",
+      deadline: props.mode === "edit" ? props.initialData.deadline : undefined,
     },
   });
   const [pending, startTransition] = useTransition();
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isCalendarPopoverOpen, setIsCalendarPopoverOpen] = useState(false);
   const { push } = useRouter();
   const onSubmit = async (formData: NewTaskSchema) => {
     startTransition(async () => {
@@ -105,6 +115,58 @@ const NewTaskForm = (props: NewTaskFormProps) => {
                 </FormControl>
                 <FormDescription>
                   Are there any details you want to add?
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deadline"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Deadline (optional)</FormLabel>
+                <Popover
+                  open={isCalendarPopoverOpen}
+                  onOpenChange={setIsCalendarPopoverOpen}
+                >
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value ? (
+                          field.value.toLocaleDateString()
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0"
+                    align="start"
+                    side="top"
+                  >
+                    <Calendar
+                      className="h-[350px]"
+                      mode="single"
+                      selected={field.value}
+                      onSelect={(value) => {
+                        field.onChange(value);
+                        setIsCalendarPopoverOpen(false);
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormDescription>
+                  When do you need to finish this task?
                 </FormDescription>
                 <FormMessage />
               </FormItem>

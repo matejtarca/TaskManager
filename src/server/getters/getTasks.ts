@@ -7,6 +7,7 @@ export type Task = {
   title: string;
   description: string;
   status: TaskStatus;
+  deadline: Date | null;
 };
 
 const getTasks = async (): Promise<Task[]> => {
@@ -20,10 +21,16 @@ const getTasks = async (): Promise<Task[]> => {
       title: true,
       description: true,
       status: true,
+      deadline: true,
     },
-    orderBy: {
-      status: "asc",
-    },
+    orderBy: [
+      {
+        status: "asc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
   });
 };
 

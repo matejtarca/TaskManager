@@ -4,6 +4,7 @@ import { prisma } from "@/server/prismaClient";
 export type TaskForForm = {
   title: string;
   description: string;
+  deadline: Date | null;
 };
 
 const getTaskDetail = async (taskId: string): Promise<TaskForForm | null> => {
@@ -17,6 +18,7 @@ const getTaskDetail = async (taskId: string): Promise<TaskForForm | null> => {
     select: {
       title: true,
       description: true,
+      deadline: true,
     },
   });
 

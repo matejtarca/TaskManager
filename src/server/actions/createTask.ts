@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 const createTaskSchema = z.object({
   title: z.string(),
   description: z.string(),
+  deadline: z.date().optional(),
 });
 
 type CreateTaskInput = z.infer<typeof createTaskSchema>;
@@ -19,6 +20,7 @@ const createTask = async (dataInput: CreateTaskInput) => {
       title: data.title,
       description: data.description,
       authorId: userId,
+      deadline: data.deadline,
     },
   });
 

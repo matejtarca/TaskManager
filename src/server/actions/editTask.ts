@@ -9,6 +9,7 @@ const editTaskSchema = z.object({
   title: z.string(),
   description: z.string(),
   taskId: z.string(),
+  deadline: z.date().optional(),
 });
 
 type EditTaskInput = z.infer<typeof editTaskSchema>;
@@ -35,6 +36,7 @@ const editTask = async (dataInput: EditTaskInput) => {
     data: {
       title: data.title,
       description: data.description,
+      deadline: data.deadline,
     },
   });
 

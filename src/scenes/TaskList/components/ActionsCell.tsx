@@ -76,7 +76,12 @@ const ActionsCell = ({ task }: ActionsCellProps) => {
           <DialogHeader>
             <DialogTitle>{task.title}</DialogTitle>
             {task.description && (
-              <DialogDescription>{task.description}</DialogDescription>
+              <DialogDescription>
+                {task.deadline && (
+                  <p>Deadline: {task.deadline.toLocaleDateString()}</p>
+                )}
+                {task.description}
+              </DialogDescription>
             )}
           </DialogHeader>
         </DialogContent>
