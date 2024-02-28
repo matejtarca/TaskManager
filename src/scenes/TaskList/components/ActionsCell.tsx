@@ -1,4 +1,4 @@
-import React, { useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { Task } from "@/server/getters/getTasks";
 import { Button } from "@/components/ui/button";
 import completeTask from "@/server/actions/completeTask";
@@ -21,11 +21,20 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import callServerAction from "@/server/helpers/callServerAction";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type ActionsCellProps = {
   task: Task;
 };
 const ActionsCell = ({ task }: ActionsCellProps) => {
+  const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [, startTransition] = useTransition();
   const onDeleteClick = () => {
     startTransition(async () => {
@@ -61,43 +70,62 @@ const ActionsCell = ({ task }: ActionsCellProps) => {
   };
   const { toast } = useToast();
   return (
-    <div className="flex flex-row justify-end gap-2 items-center">
-      {task.status === "TODO" && (
-        <TooltipProvider>
-          <Tooltip delayDuration={400}>
-            <TooltipTrigger asChild>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="bg-success/40 text-success-foreground hover:bg-success/35 hover:text-success-foreground"
-                onClick={onCompleteClick}
-              >
-                <Check className="w-4 h-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Mark as completed</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      )}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href={`/edit-task/${task.id}`}>Edit</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={onDeleteClick}>Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <>
+      <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{task.title}</DialogTitle>
+            {task.description && (
+              <DialogDescription>{task.description}</DialogDescription>
+            )}
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      <div className="flex flex-row justify-end gap-2 items-center">
+        {task.status === "TODO" && (
+          <TooltipProvider>
+            <Tooltip delayDuration={400}>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="bg-success/40 text-success-foreground hover:bg-success/35 hover:text-success-foreground"
+                  onClick={onCompleteClick}
+                >
+                  <Check className="w-4 h-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Mark as completed</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                setIsDetailDialogOpen(true);
+              }}
+            >
+              See detail
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/edit-task/${task.id}`}>Edit</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDeleteClick}>Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </>
   );
 };
 
