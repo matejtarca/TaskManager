@@ -27,7 +27,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 type ActionsCellProps = {
@@ -94,7 +93,7 @@ const ActionsCell = ({ task }: ActionsCellProps) => {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="bg-success/40 text-success-foreground hover:bg-success/35 hover:text-success-foreground"
+                  className="bg-success/40 dark:bg-success/80 text-success-foreground hover:bg-success/35 hover:text-success-foreground"
                   onClick={onCompleteClick}
                 >
                   <Check className="w-4 h-4" />

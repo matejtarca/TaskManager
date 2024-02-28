@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NextAuthProvider from "@/components/NextAuthProvider";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/providers/NextThemeProvider";
+import NextAuthProvider from "@/components/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +23,20 @@ export default function RootLayout({
     <html lang="en">
       <NextAuthProvider>
         <body className={inter.className}>
-          <Navbar />
-          <div className="min-h-screen flex flex-col justify-center items-center pt-[120px] md:pt-0">
-            <div className="w-[95vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
-              {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            <div className="min-h-screen flex flex-col justify-center items-center pt-[120px] md:pt-0">
+              <div className="w-[95vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
+                {children}
+              </div>
             </div>
-          </div>
-          <Toaster />
+            <Toaster />
+          </ThemeProvider>
         </body>
       </NextAuthProvider>
     </html>
