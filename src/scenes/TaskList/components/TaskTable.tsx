@@ -79,7 +79,7 @@ const TaskTable = ({ tasks }: TaskTableProps) => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 py-4">
+      <div className="flex flex-col gap-2 mb-4">
         <Input
           placeholder="Search tasks..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -136,7 +136,7 @@ const TaskTable = ({ tasks }: TaskTableProps) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No tasks found.
                 </TableCell>
               </TableRow>
             )}

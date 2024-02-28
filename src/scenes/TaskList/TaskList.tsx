@@ -10,7 +10,7 @@ const TaskList = async () => {
   const tasks = await getTasks();
   return (
     <div className="flex flex-col gap-4">
-      <Heading>Tasks</Heading>
+      <Heading>My Tasks</Heading>
       <TaskTable tasks={tasks} />
       <Link href={"/create-task"} className="w-fit">
         <Button className="w-fit">

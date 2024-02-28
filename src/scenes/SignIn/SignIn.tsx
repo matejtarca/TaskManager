@@ -22,6 +22,7 @@ import { useSearchParams } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { Heading } from "@/components/ui/heading";
 
 const signInSchema = z.object({
   username: z.string().min(3).max(50),
@@ -50,7 +51,8 @@ const SignIn = () => {
   const searchParams = useSearchParams();
   const error = searchParams?.get("error");
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <Heading>Sign in</Heading>
       {error === "CredentialsSignin" && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
@@ -61,7 +63,7 @@ const SignIn = () => {
         </Alert>
       )}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="username"
@@ -69,15 +71,8 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="username"
-                    autoComplete="username"
-                    {...field}
-                  />
+                  <Input autoComplete="username" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -95,15 +90,19 @@ const SignIn = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>This is your password</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Sign in</Button>
         </form>
       </Form>
-      Don&apos;t have an account? <Link href={"sign-up"}>Sign up</Link>
+      <p>
+        Don&apos;t have an account?{" "}
+        <Link href={"sign-up"} className="underline">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 };

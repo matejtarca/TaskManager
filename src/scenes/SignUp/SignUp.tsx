@@ -24,6 +24,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { passwordSchema } from "@/server/helpers/schemas";
 import callServerAction from "@/server/helpers/callServerAction";
 import { signIn } from "next-auth/react";
+import { Heading } from "@/components/ui/heading";
 
 const signUpSchema = z.object({
   username: z.string().min(3).max(50),
@@ -33,7 +34,7 @@ const signUpSchema = z.object({
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
-const SignIn = () => {
+const SignUp = () => {
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -66,7 +67,8 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <Heading>Sign up</Heading>
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
@@ -75,7 +77,7 @@ const SignIn = () => {
         </Alert>
       )}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="username"
@@ -84,13 +86,12 @@ const SignIn = () => {
                 <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="username"
                     autoComplete="username"
                     {...field}
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  This is your unique username, which will be used to sign in
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -109,7 +110,7 @@ const SignIn = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>This is your password</FormDescription>
+                <FormDescription>Your top secret password</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -127,7 +128,9 @@ const SignIn = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>This is your password</FormDescription>
+                <FormDescription>
+                  Can you type that password again?
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -138,9 +141,14 @@ const SignIn = () => {
           </Button>
         </form>
       </Form>
-      Already have an account? <Link href={"sign-in"}>Sign in</Link>
+      <p>
+        Already have an account?{" "}
+        <Link href={"sign-in"} className="underline">
+          Sign in
+        </Link>
+      </p>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

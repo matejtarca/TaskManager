@@ -30,7 +30,9 @@ const Navbar = async () => {
           <div className="flex items-center gap-4">
             <span>Not signed in</span>
             <Link href={"/sign-in"}>
-              <Button>Sign in</Button>
+              <Button variant="secondary" size="sm">
+                Sign in
+              </Button>
             </Link>
           </div>
         )}

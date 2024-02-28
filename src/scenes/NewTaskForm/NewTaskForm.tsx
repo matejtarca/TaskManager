@@ -23,6 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import editTask from "@/server/actions/editTask";
 import Link from "next/link";
+import {Heading} from "@/components/ui/heading";
 
 const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).max(50),
@@ -68,7 +69,8 @@ const NewTaskForm = (props: NewTaskFormProps) => {
     });
   };
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <Heading>New Task</Heading>
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
@@ -77,7 +79,7 @@ const NewTaskForm = (props: NewTaskFormProps) => {
         </Alert>
       )}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="title"
@@ -101,7 +103,9 @@ const NewTaskForm = (props: NewTaskFormProps) => {
                 <FormControl>
                   <Textarea rows={5} {...field} />
                 </FormControl>
-                <FormDescription>Brief description</FormDescription>
+                <FormDescription>
+                  Are there any details you want to add?
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -117,7 +121,7 @@ const NewTaskForm = (props: NewTaskFormProps) => {
           </div>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
 
