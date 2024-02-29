@@ -12,5 +12,14 @@ export default async function Page({ params }: { params: { taskId: string } }) {
   if (!task) {
     return <p>Task not found</p>;
   }
-  return <NewTaskForm mode="edit" initialData={task} taskId={params.taskId} />;
+  return (
+    <NewTaskForm
+      mode="edit"
+      initialData={{
+        ...task,
+        deadline: task.deadline ?? undefined,
+      }}
+      taskId={params.taskId}
+    />
+  );
 }
