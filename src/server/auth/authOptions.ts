@@ -3,6 +3,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/server/prismaClient";
 import { verify } from "argon2";
 
+/**
+ * The options for the authentication provider. This object is used to configure the NextAuth.js authentication. The only
+ * provider used is the CredentialsProvider, which allows users to sign in using a username and password.
+ */
 export const authOptions: AuthOptions = {
   pages: {
     signIn: "/sign-in",

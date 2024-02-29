@@ -32,6 +32,11 @@ import {
 type ActionsCellProps = {
   task: Task;
 };
+
+/**
+ * Client-side component containing the actions for a given task in the task list. Used as a cell in the TaskTable component.
+ * @param task - The task to display the actions for.
+ */
 const ActionsCell = ({ task }: ActionsCellProps) => {
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [, startTransition] = useTransition();
@@ -97,6 +102,7 @@ const ActionsCell = ({ task }: ActionsCellProps) => {
                   onClick={onCompleteClick}
                 >
                   <Check className="w-4 h-4" />
+                  <span className="sr-only">Mark as completed</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

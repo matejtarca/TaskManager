@@ -10,6 +10,11 @@ export type Task = {
   deadline: Date | null;
 };
 
+/**
+ * Get all tasks for the current user. The tasks are ordered by status and then by creation date.
+ *
+ * @returns {Promise<Task[]>} The tasks for the current user.
+ */
 const getTasks = async (): Promise<Task[]> => {
   const user = await requireUser();
   return prisma.task.findMany({

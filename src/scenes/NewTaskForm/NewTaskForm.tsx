@@ -48,6 +48,14 @@ type NewTaskFormProps =
       initialData: NewTaskSchema;
       taskId: string;
     };
+
+/**
+ * Client-side component containing a form to create or edit a task.
+ *
+ * @param mode - The mode of the form, either "create" or "edit".
+ * @param initialData - The initial data to populate the form with when in "edit" mode.
+ * @param taskId - The id of the task to edit when in "edit" mode.
+ */
 const NewTaskForm = (props: NewTaskFormProps) => {
   const form = useForm<NewTaskSchema>({
     resolver: zodResolver(newTaskSchema),
@@ -80,7 +88,7 @@ const NewTaskForm = (props: NewTaskFormProps) => {
   };
   return (
     <div className="flex flex-col gap-4">
-      <Heading>New Task</Heading>
+      <Heading>{props.mode === "create" ? "New Task" : "Edit Task"}</Heading>
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />

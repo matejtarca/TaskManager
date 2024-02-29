@@ -12,6 +12,12 @@ const signUpSchema = z.object({
 });
 
 type SignUpInput = z.infer<typeof signUpSchema>;
+
+/**
+ * Server action which creates a new user in the database. If the username is already taken, an expected error is thrown.
+ *
+ * @param data - Object containing the username and plaintext password of the user to create.
+ */
 const signUp = async (data: SignUpInput) => {
   const { username, password } = signUpSchema.parse(data);
 

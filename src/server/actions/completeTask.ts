@@ -10,6 +10,12 @@ const completeTaskSchema = z.object({
 });
 
 type CompleteTaskInput = z.infer<typeof completeTaskSchema>;
+
+/**
+ * Server action which marks a task as completed. If the task is not found or the current user is not the author, an error is thrown.
+ *
+ * @param dataInput - Object containing the id of the task to complete.
+ */
 const completeTask = async (dataInput: CompleteTaskInput) => {
   const { id: userId } = await requireUser();
   const data = completeTaskSchema.parse(dataInput);

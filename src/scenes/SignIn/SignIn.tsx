@@ -31,6 +31,11 @@ const signInSchema = z.object({
 
 type SignInSchema = z.infer<typeof signInSchema>;
 
+/**
+ * Client-side component containing a form to sign in the user. The authentication uses username and password
+ * and is handled by credentials provider from NextAuth. After successful sign in, the user is redirected to
+ * the home page.
+ */
 const SignIn = () => {
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),

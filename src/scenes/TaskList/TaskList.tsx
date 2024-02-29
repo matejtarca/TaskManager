@@ -6,6 +6,9 @@ import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
 
+/**
+ * Server-side component rendering a list of tasks and a button to create a new task.
+ */
 const TaskList = async () => {
   const tasks = await getTasks();
   return (
