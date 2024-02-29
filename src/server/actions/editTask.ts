@@ -14,6 +14,11 @@ const editTaskSchema = z.object({
 
 type EditTaskInput = z.infer<typeof editTaskSchema>;
 
+/**
+ * Server action which edits a task in the database. If the task is not found or the current user is not the author, an error is thrown.
+ *
+ * @param dataInput - Object containing the details of the task to edit - title, description, deadline and the id of the task to edit.
+ */
 const editTask = async (dataInput: EditTaskInput) => {
   const user = await requireUser();
   const data = editTaskSchema.parse(dataInput);

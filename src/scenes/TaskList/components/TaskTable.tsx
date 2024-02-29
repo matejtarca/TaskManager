@@ -32,6 +32,12 @@ type TaskTableProps = {
   tasks: Task[];
 };
 
+/**
+ * Formats a date relative to the current date. The date is formatted as a relative time (e.g. "in 3 days", "yesterday" etc.).
+ * @param date - The date to format.
+ *
+ * @returns object - The formatted date and a boolean indicating whether the date is overdue (in the past).
+ */
 const formatDateRelativeToNow = (date: Date) => {
   const todayMidnight = new Date();
   todayMidnight.setHours(0, 0, 0, 0);
@@ -55,6 +61,9 @@ const formatDateRelativeToNow = (date: Date) => {
   };
 };
 
+/**
+ * The columns configuration for the task table.
+ */
 const columns: ColumnDef<Task>[] = [
   {
     header: "Title",
@@ -99,6 +108,13 @@ const columns: ColumnDef<Task>[] = [
     cell: (cell) => <ActionsCell task={cell.row.original} />,
   },
 ];
+
+/**
+ * Client-side table component to display a list of tasks. Each task displays its title, status, deadline and actions.
+ * The tasks can be filtered by title or status.
+ *
+ * @param tasks - The list of tasks to display.
+ */
 const TaskTable = ({ tasks }: TaskTableProps) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

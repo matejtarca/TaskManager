@@ -11,6 +11,11 @@ const deleteTaskSchema = z.object({
 
 type DeleteTaskInput = z.infer<typeof deleteTaskSchema>;
 
+/**
+ * Server action which deletes a task from the database. If the task is not found or the current user is not the author, an error is thrown.
+ *
+ * @param dataInput - Object containing the id of the task to delete.
+ */
 const deleteTask = async (dataInput: DeleteTaskInput) => {
   const user = await requireUser();
   const data = deleteTaskSchema.parse(dataInput);

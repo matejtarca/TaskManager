@@ -13,6 +13,14 @@ type ServerActionReturn<TReturn> =
       success: false;
     };
 
+/**
+ * Calls a server action in a safe way, catching any errors and returning a consistent response.
+ * @param action - The server action to call
+ * @param data - The data to pass to the server action
+ *
+ * @returns object - containing the success status, a message (if success is false the message will contain the
+ * error message), and the data returned from the server action (if success is true)
+ */
 const callServerAction = async <TData, TReturn>(
   action: (data: TData) => Promise<TReturn>,
   data: TData,

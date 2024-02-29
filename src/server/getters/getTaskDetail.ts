@@ -7,6 +7,14 @@ export type TaskForForm = {
   deadline: Date | null;
 };
 
+/**
+ * Get the details of a task used to pre-fill the form for editing a task.
+ *
+ * @param taskId The id of the task to get the details for.
+ *
+ * @returns {Promise<TaskForForm | null>} The details of the task, or null if the task does not exist or
+ * is not owned by the current user.
+ */
 const getTaskDetail = async (taskId: string): Promise<TaskForForm | null> => {
   const user = await requireUser();
 

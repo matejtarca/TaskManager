@@ -12,6 +12,12 @@ const createTaskSchema = z.object({
 });
 
 type CreateTaskInput = z.infer<typeof createTaskSchema>;
+
+/**
+ * Server action which creates a new task in the database. The current user is set as the author of the task.
+ *
+ * @param dataInput - Object containing the details of the task to create - title, description and optional deadline.
+ */
 const createTask = async (dataInput: CreateTaskInput) => {
   const { id: userId } = await requireUser();
   const data = createTaskSchema.parse(dataInput);

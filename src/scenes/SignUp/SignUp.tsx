@@ -34,6 +34,10 @@ const signUpSchema = z.object({
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
+/**
+ * Client-side component containing a form to sign up the user. After successful sign up, the user is signed in and redirected to
+ * the home page.
+ */
 const SignUp = () => {
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -85,10 +89,7 @@ const SignUp = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    autoComplete="username"
-                    {...field}
-                  />
+                  <Input autoComplete="username" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your unique username, which will be used to sign in
